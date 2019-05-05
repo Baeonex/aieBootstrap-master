@@ -1,10 +1,9 @@
-#include "ButtonApp.h"
-#include <random>
-#include <time.h>
+#include "SimonApp.h"
+
 int main() {
-	srand(time(NULL));
+	
 	// allocation
-	auto app = new ButtonApp();
+	auto app = new SimonApp();
 
 	// initialise and loop
 	app->run("AIE", 1280, 720, false);
