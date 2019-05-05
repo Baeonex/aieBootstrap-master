@@ -20,6 +20,9 @@ public:
 	int CompareLists(LinkedList* list1, LinkedList* list2);
 protected:
 	bool notEnd;
+	int correctCounter;
+	bool failInput;
+	char* charCorrectCounter;
 	LinkedList* answerList;
 	LinkedList* list;
 	int randomNumber;

@@ -14,6 +14,7 @@ ButtonApp::~ButtonApp() {
 bool ButtonApp::startup() {
 	
 	m_2dRenderer = new aie::Renderer2D();
+	correctCounter = 0;
 	list = new LinkedList;
 	answerList = new LinkedList;
 	ball = new aie::Texture("../bin/textures/ball.png");
@@ -57,10 +58,17 @@ void ButtonApp::update(float deltaTime) {
 
 	if (m_startButton->Update())
 	{
-		notEnd = true;
-		Random();
-		ballDraw();
-		
+		cout << correctCounter << endl;
+		cout << list->length << endl;
+		if (correctCounter == list->length)
+		{
+			failInput = true;
+			notEnd = true;
+			Random();
+			ballDraw();
+		}
+		else
+			failInput = false;
 	}
 	if (m_buttonYellow->Update())
 	{
@@ -141,6 +149,8 @@ bool ButtonApp::checkFail(bool &notEnd)
 	if (answerList->length == list->length)
 	{
 		notEnd = answerList->areIdentical(answerList->head, list->head);
+		if (notEnd)
+			correctCounter++;
 		answerList->clearList();
 		answerList->length = 0;
 	}
@@ -160,6 +170,10 @@ void ButtonApp::draw() {
 
 	// begin drawing sprites
 	m_2dRenderer->begin();
+	if (!failInput)
+	{
+		m_2dRenderer->drawText(m_font, "must complete the sequence", 400, 600);
+	}
 	if (!notEnd)
 	{
 		m_2dRenderer->drawText(m_font, "Failed", 400, 400);
